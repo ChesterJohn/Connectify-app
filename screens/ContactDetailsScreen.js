@@ -250,8 +250,7 @@ const ContactDetailsScreen = ({ route, navigation }) => {
         quality: 1,
       });
  
-      if (!result.cancelled) {
-        console.log("image URI from photos app:", result.assets[0].uri);
+      if (!result.cancelled) { 
         handleImageSave(result.assets[0].uri);
       }
   };
@@ -267,7 +266,6 @@ const ContactDetailsScreen = ({ route, navigation }) => {
       });
 
       if (!result.cancelled) {
-        console.log("image URI from camera:", result.assets[0].uri);
         handleImageSave(result.assets[0].uri);
       }
   };

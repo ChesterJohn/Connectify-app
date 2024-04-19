@@ -19,17 +19,27 @@ To get started with Connectify, follow these steps:
 
 1.  Clone the repository to your local machine:
 
--   `git clone https://github.com/ChesterJohn/Connectify-app.git`
+    `git clone https://github.com/ChesterJohn/Connectify-app.git`
 
 2.  Install dependencies:
 
--   `npm install`
+        
+    ````
+    npm install react-native-vector-icons
+    npm install react-native-awesome-alerts
+    npm install react-native-elements
+    npm install @react-navigation/native
+    npm install @react-navigation/native-stack
+    
+    expo install expo-image-picker
+    expo install expo-av
+    expo install expo-sqlite
+    ````
 
-3.    Run the app:
+3. Run the app in your emulator or device using Expo.
 
--   `npm expo start`
+    `npx expo start`
 
-4.  Open the app in your emulator or device using Expo.
 
 Usage
 -----
@@ -54,7 +64,13 @@ Technologies Used
 -----------------
 
 -   React Native
+    - Elements
+    - Vector Icons
+    - Awesome Alerts
 -   @react-navigation/native
+-   @react-navigation/native-stack
 -   Expo Image Picker
 -   Expo Audio
 -   Expo SQLite
+ 
+
