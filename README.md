@@ -1,6 +1,8 @@
 Connectify - React Native App Repository
 ========================================
 
+![connectify](https://github.com/ChesterJohn/Connectify-app/assets/6541417/f9b92640-0bdb-43ec-a04c-d6decbb64d39)
+
 This repository contains the Connectify app, a React Native application that enables users to manage contacts.
 
 Features
