@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "connectify",
+    "name": "Connectify",
     "slug": "connectify",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -15,16 +15,25 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.chestercodes.connectify",
+      "buildNumber": "1.0.0"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.chestercodes.connectify",
+      "versionCode": 100
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "435f7c55-9aba-4c55-a3fb-d0f5b1e2e645"
+      }
     }
   }
 }
