@@ -28,6 +28,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         borderColor: '#ccc',
         width: '100%',
+        fontSize: 16,
     }
 });
 

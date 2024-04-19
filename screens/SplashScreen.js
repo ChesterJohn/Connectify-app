@@ -13,7 +13,7 @@ const SplashScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}> 
-      <Image source={require('../assets/connectify-splash.png')} style={styles.image} />
+      <Image source={require('../assets/images/connectify.png')} style={styles.image} />
     </View>
   );
 };

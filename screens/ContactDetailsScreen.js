@@ -4,17 +4,19 @@ import { View, Text, Button, StyleSheet, Image, TouchableOpacity, Linking } from
 import { fetchContactById, deleteContact, updateContactImage, saveRecordingURI  } from '../components/Database';
 import { InfoAlert, ConfirmAlert, ConfirmNoteDelete } from '../components/Alerts';
 import * as ImagePicker from 'expo-image-picker'; 
-import defaultImage from '../assets/user-default.png'; 
+import defaultImage from '../assets/images/user-default.png'; 
 import IconButton from '../components/IconButton';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { Audio } from 'expo-av';
 
 
-const IconOnlyButton = ({ name, onPress }) => (
-  <TouchableOpacity onPress={onPress} style={styles.socialButton}>
-    <Text>  
-      <Icon name={name} size={32} color="#4267B3" />  
-    </Text>
+const IconOnlyButton = ({ name, onPress, disabled }) => (
+  <TouchableOpacity 
+    onPress={onPress} 
+    style={[styles.socialButton, disabled && styles.disabledButton]}
+    disabled={disabled}
+  >
+    <Icon name={name} size={32} color={disabled ? "#cccccc" : "#4267B3"} /> 
   </TouchableOpacity>
 );
 
@@ -285,6 +287,13 @@ const ContactDetailsScreen = ({ route, navigation }) => {
   };
 
   const handleFacebookPress = async (url) => { 
+    console.log(url);
+    if (!url) {
+      setInfoMessage('No facebook profile found.');
+      setShowInfoAlert(true); 
+      return;
+    }
+
     const appURL = `fb://facewebmodal/f?href=${url}`; 
     if (await Linking.canOpenURL(appURL)) {
       await Linking.openURL(appURL);
@@ -353,9 +362,21 @@ const handlexTwitterPress = async (username) => {
             <View style={styles.sectionCardContainer}>
               <Text style={styles.sectionTitle}>Socials</Text>
                 <View style={styles.buttonRow}> 
-                  <IconOnlyButton name="facebook" onPress={() => handleFacebookPress(contact.facebook)} />
-                  <IconOnlyButton name="instagram" onPress={() => handleInstagramPress(contact.instagram)} />
-                  <IconOnlyButton name="twitter" onPress={() => handlexTwitterPress(contact.xApp)} /> 
+                  <IconOnlyButton 
+                    name="facebook" 
+                    onPress={() => handleFacebookPress(contact.facebook)}
+                    disabled={!contact.facebook}
+                  />
+                  <IconOnlyButton 
+                    name="instagram" 
+                    onPress={() => handleInstagramPress(contact.instagram)}
+                    disabled={!contact.instagram}
+                  />
+                  <IconOnlyButton 
+                    name="twitter" 
+                    onPress={() => handlexTwitterPress(contact.xApp)}
+                    disabled={!contact.xApp}
+                  /> 
               </View>
             </View>
             
@@ -363,9 +384,17 @@ const handlexTwitterPress = async (username) => {
               <Text style={styles.sectionTitle}>Audio Note</Text>
               <Text>Status: {status}</Text>
               <View style={styles.buttonRow}>  
-                <IconOnlyButton name={isRecording ? "stop" : "circle"} onPress={() => isRecording ? stopRecording() : startRecording()} />
-                <IconOnlyButton name={isPlaying ? "pause" : "play"} onPress={() => playRecording()} />
-                <IconOnlyButton name="trash" onPress={() => setShowConfirmNoteDelete(true)} />  
+                <IconOnlyButton name={isRecording ? "stop" : "circle"} 
+                  onPress={() => isRecording ? stopRecording() : startRecording()}  
+                  disabled={recordingURI !== null && !isRecording}
+                />
+                <IconOnlyButton name={isPlaying ? "pause" : "play"} 
+                  onPress={() => playRecording()}  
+                  disabled={!recordingURI} 
+                />
+                <IconOnlyButton name="trash" onPress={() => setShowConfirmNoteDelete(true)}  
+                  disabled={!recordingURI}
+                />  
               </View>
             </View>
           </View>
@@ -472,6 +501,9 @@ const styles = StyleSheet.create({
     color: "#000", 
     fontSize: 16, 
     marginLeft: 15,
+  },
+  disabledButton: { 
+    opacity: 0.4,
   },
 });
 

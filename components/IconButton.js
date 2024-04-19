@@ -13,28 +13,27 @@ const IconButton = ({ onPress, icon, title }) => (
 
 const styles = StyleSheet.create({
   appButtonContainer: {
-    justifyContent: 'center', // Center content vertically
-    alignItems: 'center', // Center content horizontally
+    justifyContent: 'center', 
+    alignItems: 'center', 
     padding: 10,
-    margin: 5, // Space between buttons
-    borderRadius: 20, // Slightly rounded corners
-    backgroundColor: '#4267B3', // Fixed background color
-    width: 70, // Match icon size
-    height: 70, // Match icon size
+    margin: 5,  
+    borderRadius: 20,  
+    backgroundColor: '#4267B3',  
+    width: 70,  
+    height: 70, 
   },
   appButtonText: {
     fontSize: 14,
     color: '#fff',
-    paddingTop: 4, // Space between icon and text
-    textAlign: 'center', // Center text horizontally
+    paddingTop: 4, 
+    textAlign: 'center',  
   },
   iconContainer: {
-    // Optionally create a container for the icon if additional styling is needed
-    width: 24, // Match icon size
-    height: 24, // Match icon size
-    marginBottom: 4, // Space between icon and text
-    justifyContent: 'center', // Center icon in the container
-    alignItems: 'center', // Center icon in the container
+    width: 24,  
+    height: 24,  
+    marginBottom: 4,  
+    justifyContent: 'center',  
+    alignItems: 'center',  
   },
 });
 

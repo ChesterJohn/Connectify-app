@@ -3,9 +3,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, FlatList, Button, TouchableOpacity, TextInput, StyleSheet, Image } from 'react-native';
 import { fetchContacts, toggleFavorite } from '../components/Database';
 import CustomTextInput from '../components/CustomTextInput';
-import IconButton from '../components/IconButton';
-
-
 
 const HomeScreen = ({ navigation }) => {
   const [contacts, setContacts] = useState([]);
@@ -29,7 +26,12 @@ const HomeScreen = ({ navigation }) => {
       contact.name.toLowerCase().includes(searchText.toLowerCase()) ||
       contact.phone.includes(searchText) ||
       (contact.email && contact.email.toLowerCase().includes(searchText.toLowerCase()))
-    ).sort((a, b) => b.favorite - a.favorite); // Sort so that favorites are at the top
+    ).sort((a, b) => { 
+      if (b.favorite - a.favorite !== 0) {
+        return b.favorite - a.favorite;
+      } 
+      return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+    });
     setFilteredContacts(filtered);
   };
 
@@ -39,7 +41,7 @@ const HomeScreen = ({ navigation }) => {
 
   const handleFavoriteToggle = async (id, isFavorite) => {
     await toggleFavorite(id, isFavorite);
-    loadContacts();  // Reload contacts to update the list
+    loadContacts();  
   };
 
   const renderItem = ({ item }) => (
@@ -47,7 +49,11 @@ const HomeScreen = ({ navigation }) => {
       style={styles.item}
       onPress={() => navigation.navigate('ContactDetails', { ...item })}
     >
-      <Text>{item.name}</Text>
+      <Image
+      source={item.imageUri ? { uri: item.imageUri } : require('../assets/images/user-default.png')}
+      style={styles.contactImage}
+    />
+      <Text style={styles.itemName}>{item.name}</Text>
       <TouchableOpacity onPress={() => handleFavoriteToggle(item.id, item.favorite)}>
         <Image
           style={styles.starIcon}
@@ -82,24 +88,30 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#E9EBEE',
     padding: 10,
-    alignItems: 'center'
+    alignSelf: 'center',  
+    width: '100%', 
   },
   item: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
-    padding: 10,
-    fontSize: 18,
-    backgroundColor: '#f8f8f8',
-    width: '100%',
+    padding: 10, 
+    width: '100%', 
     borderBottomWidth: 1,
-    borderBottomColor: '#ccc'
+    borderBottomColor: '#ccc', 
+    alignSelf: 'center',
+  },
+  itemName: {
+    fontSize: 16,  
+    color: '#333',  
+    paddingHorizontal: 5,
+    flex: 1,
   },
   searchInput: {
     height: 40,
     fontSize: 18,
     marginBottom: 10,
-    width: '100%',
+    width: '100%', // This ensures it matches the container's width
     paddingHorizontal: 10,
     borderWidth: 1,
     borderColor: 'gray'
@@ -107,8 +119,15 @@ const styles = StyleSheet.create({
   starIcon: {
     width: 30,
     height: 30
-  }
+  },
+  contactImage: {
+    width: 40,  
+    height: 40,  
+    borderRadius: 20,  
+    marginRight: 10,  
+  },
 });
+
 
 
 export default HomeScreen;
